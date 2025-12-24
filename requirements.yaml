@@ -1,0 +1,28 @@
+name: plantxbot-env
+channels:
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.10
+  - pip
+  - sqlite
+  - pandas
+  - numpy
+  - flask
+  - flask-cors
+  - werkzeug
+  - pyyaml
+  - requests
+  - retry
+  - cachetools
+  - structlog
+  - python-dotenv
+  - scikit-learn
+  - sentence-transformers
+  - chromadb
+
+  - pip:
+      - langchain
+      - langchain-groq
+      - flask-limiter
