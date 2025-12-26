@@ -138,17 +138,17 @@ USER_DEFINED_SCHEMA = {
 ```
 
 ### 8.Running the Application
-Step 1: Start the Backend (Flask API)
+**Step 1: Start the Backend (Flask API)**
 The backend must be running to process messages. It runs on port 5001 by default.
 
 ```bash
 conda activate plantxbot-env
 python demo_app.py
 ```
-Step 2: Access the Application
+**Step 2: Access the Application**
 
 Open your web browser and navigate to the URL matching your folder name setup in Step 1.
-
+```bash
 URL: http://YOUR_SERVER_IP/MyChatApp/chat.php?bot=demo
-
+```
 
