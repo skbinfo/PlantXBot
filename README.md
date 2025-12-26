@@ -1,49 +1,140 @@
-# PlantXBot - AI-Powered Genomics Chatbot Platform
+# PlantXBot - AI-Powered Database Chatbot Platform
 
-**PlantXBot** is a flexible, AI-driven conversational interface designed to query specialized databases using natural language. It combines **Large Language Models (LLMs)** with **SQL generation** and **Retrieval-Augmented Generation (RAG)** to provide accurate, data-backed answers for scientific research.
+**PlantXBot** is a flexible, AI-driven conversational interface designed to query specialized databases using natural language. It combines **Large Language Models (LLMs)** with **SQL generation** and **Retrieval-Augmented Generation (RAG)** to provide accurate, data-backed answers.
 
-Originally designed for plant genomics (tRFs, peptides, fusion transcripts), this codebase has been generalized to serve as a robust template for any domain-specific database chatbot.
+> **Note:** This repository contains the original source code and the original database (`all_database_2.db`) used for the Plant Regulatory Elements project. **To use this platform for your own project, you must provide your own SQLite database file.**
 
-##  Key Features
+## Key Features
 
-*   **Natural Language to SQL:** Automatically converts user questions (e.g., *"Show me peptides with high stability"*) into optimized SQL queries.
+*   **Natural Language to SQL:** Automatically converts user questions (e.g., *"Show me inventory items with low stock"*) into optimized SQL queries.
 *   **Dual-Layer Intelligence:**
     *   **Intent Classification:** Distinguishes between data lookup, metadata questions, and general conversation.
     *   **Orchestration:** Uses LangChain to manage context and conversation history.
-*   **RAG Capabilities:** Integrates with **ChromaDB** to answer unstructured questions using embedded knowledge bases (e.g., research papers or documentation).
-*   **Dynamic UI:** A React-based chat interface embedded in PHP, featuring:
-    *   Streaming responses.
-    *   Dynamic data grid previews.
-    *   CSV download generation.
+*   **RAG Capabilities:** Integrates with **ChromaDB** to answer unstructured questions using embedded knowledge bases (e.g., PDFs or documentation).
+*   **Dynamic UI:** A React-based chat interface embedded in PHP, featuring streaming responses, dynamic data grid previews, and CSV downloads.
 *   **High Performance:** Built on Groq's inference engine (Llama-3/Mixtral) for sub-second latency.
 
-##  Repository Structure
+## Repository Structure
 
 | File | Description |
 | :--- | :--- |
-| `demo_app.py` | The Flask API server that acts as the backend dispatcher. |
-| `demo_bot.py` | The core AI logic (LangChain agents, SQL generation, Prompt Templates). |
+| `demo_app.py` | The Flask API server acting as the backend dispatcher. |
+| `demo_bot.py` | The core AI logic. **You must edit this to map your own database schema.** |
 | `setup.sh` | Automated script to create the Conda environment and install dependencies. |
 | `requirements.yaml` | Detailed dependency definitions for Conda/Pip. |
 | `chat.php` | The main Chatbot UI (React + PHP). |
 | `about.php` | Project information page. |
 | `team.php` | Team/Credits page. |
-| `all_database_2.db` | The SQLite database file (Main data source). |
+| `all_database_2.db` | **Original Project Database.** Use this as a reference or replace it with your own `.db` file. |
 
 ## 🛠️ Prerequisites
-
-Before installing, ensure you have the following:
 
 1.  **Operating System:** Linux (Ubuntu 20.04+ recommended), macOS, or Windows (via WSL2).
 2.  **Package Manager:** [Anaconda](https://www.anaconda.com/) or [Miniconda](https://docs.conda.io/en/latest/miniconda.html).
 3.  **Git:** Installed and configured.
 4.  **API Key:** A free **Groq API Key** (Get one at [console.groq.com](https://console.groq.com)).
 
-## Installation & Setup
+##  Installation & Setup
 
 ### 1. Clone the Repository
 ```bash
 git clone https://github.com/skbinfo/PlantXBot.git
 cd PlantXBot
+```
+### 2. We provide a setup.sh script to handle environment creation automatically.
+```bash
+Bash
+chmod +x setup.sh
+./setup.sh
+```
+### 3.Bring Your Own Data
+The file all_database_2.db included in this repository is the original database for the plant genomics project. To use this chatbot with your own data:
+Place your Database: Copy your own SQLite file (e.g., my_data.db) into the root directory of this repository.
+Update Configuration: Open demo_bot.py and edit the configuration section at the top:
+
+```bash
+# In demo_bot.py
+
+# 1. Update the filename
+DB_FILE = 'my_data.db'  # <--- Change this to your file name
+
+# 2. Update the Schema Definition
+# You must describe your tables so the AI knows how to query them.
+USER_DEFINED_SCHEMA = {
+    'my_data.db': {
+        'tables': {
+            'your_table_name': {
+                'columns': [
+                    {'name': 'id', 'sqlite_type': 'INTEGER', 'description': 'Unique identifier'},
+                    {'name': 'product_name', 'sqlite_type': 'TEXT', 'description': 'Name of product'},
+                    # ... define your columns here
+                ],
+                'description': 'Description of what this table contains.'
+            }
+        }
+    }
+```
+
+### 4.Configure the Backend (demo_bot.py)
+Open demo_bot.py and look for the User Configuration section at the top. Update the paths to match where you cloned the repo.
+
+```bash
+# --- demo_bot.py ---
+
+# 1. Update the Database Path
+# Change '/var/www/html/PlantXBot' to YOUR folder path (e.g., '/var/www/html/MyChatApp')
+DB_PATH = os.getenv('DB_PATH', '/var/www/html/MyChatApp') 
+
+# 2. Update the Database Filename
+DB_FILE = 'my_data.db' # Replace with your own SQLite file
+
+# 3. Update the Download URL Base
+# This is where users download CSVs generated by the bot.
+# Change IP/Path to match your server.
+BASE_URL = 'http://YOUR_SERVER_IP/MyChatApp/public/downloads'
+```
+### 5.Configure the Frontend (chat.php)
+The React frontend needs to know where to send the chat messages. Open chat.php and scroll down to the JavaScript/React section.
+Find the fetch call inside the handleSubmit function:
+```bash
+// --- chat.php ---
+
+// Change 'http://localhost:5001' to your server's IP or Domain.
+// If accessing remotely, 'localhost' will not work for the client.
+const res = await fetch(`http://YOUR_SERVER_IP:5001/query/${botName}`, {
+    method: 'POST',
+    // ...
+});
+```
+
+### 6.Define Your Schema (demo_bot.py)
+The model needs to know the structure of your database. Edit USER_DEFINED_SCHEMA in demo_bot.py:
+```bash
+USER_DEFINED_SCHEMA = {
+    'my_data.db': {
+        'tables': {
+            'products': { # Your table name
+                'columns': [
+                    {'name': 'id', 'sqlite_type': 'INTEGER', 'description': 'Product ID'},
+                    {'name': 'price', 'sqlite_type': 'REAL', 'description': 'Price in USD'},
+                ],
+                'description': 'Table containing product inventory.'
+            }
+        }
+    }
+}
+```
+
+### 7.Running the Application
+Step 1: Start the Backend (Flask API)
+The backend must be running to process messages. It runs on port 5001 by default.
+
+```bash
+conda activate plantxbot-env
+python demo_app.py
+```
+#Step 2: Access the Application
+#Open your web browser and navigate to the URL matching your folder name setup in Step 1.
+#URL: http://YOUR_SERVER_IP/MyChatApp/chat.php?bot=demo
 
 
