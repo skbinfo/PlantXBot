@@ -75,7 +75,19 @@ USER_DEFINED_SCHEMA = {
     }
 ```
 
-### 4.Configure the Backend (demo_bot.py)
+### 4. Set up Knowledge Base (ChromaDB)
+This platform uses ChromaDB for Retrieval-Augmented Generation (RAG). This allows the bot to answer general questions based on unstructured text (like PDFs or documentation) that isn't in your SQL database.
+If you DO NOT need RAG: You can skip this step. The bot will detect that the Vector DB is missing and will default to answering only SQL-based data questions.
+If you DO need RAG:
+You must generate your own embeddings for your documents using LangChain or Chroma directly.
+Place your persisted ChromaDB folder inside the project directory.
+Ensure the folder name matches the configuration in demo_bot.py:
+```bash
+# In demo_bot.py
+CHROMA_PERSIST_DIR = os.path.join(DB_PATH, 'Chroma_db')
+```
+
+### 5.Configure the Backend (demo_bot.py)
 Open demo_bot.py and look for the User Configuration section at the top. Update the paths to match where you cloned the repo.
 
 ```bash
@@ -93,7 +105,7 @@ DB_FILE = 'my_data.db' # Replace with your own SQLite file
 # Change IP/Path to match your server.
 BASE_URL = 'http://YOUR_SERVER_IP/MyChatApp/public/downloads'
 ```
-### 5.Configure the Frontend (chat.php)
+### 6.Configure the Frontend (chat.php)
 The React frontend needs to know where to send the chat messages. Open chat.php and scroll down to the JavaScript/React section.
 Find the fetch call inside the handleSubmit function:
 ```bash
@@ -107,7 +119,7 @@ const res = await fetch(`http://YOUR_SERVER_IP:5001/query/${botName}`, {
 });
 ```
 
-### 6.Define Your Schema (demo_bot.py)
+### 7.Define Your Schema (demo_bot.py)
 The model needs to know the structure of your database. Edit USER_DEFINED_SCHEMA in demo_bot.py:
 ```bash
 USER_DEFINED_SCHEMA = {
@@ -125,7 +137,7 @@ USER_DEFINED_SCHEMA = {
 }
 ```
 
-### 7.Running the Application
+### 8.Running the Application
 Step 1: Start the Backend (Flask API)
 The backend must be running to process messages. It runs on port 5001 by default.
 
@@ -133,8 +145,10 @@ The backend must be running to process messages. It runs on port 5001 by default
 conda activate plantxbot-env
 python demo_app.py
 ```
-#Step 2: Access the Application
-#Open your web browser and navigate to the URL matching your folder name setup in Step 1.
-#URL: http://YOUR_SERVER_IP/MyChatApp/chat.php?bot=demo
+Step 2: Access the Application
+
+Open your web browser and navigate to the URL matching your folder name setup in Step 1.
+
+URL: http://YOUR_SERVER_IP/MyChatApp/chat.php?bot=demo
 
 
