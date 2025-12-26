@@ -1,4 +1,4 @@
-# PlantXBot - AI-Powered Database Chatbot Platform
+# PlantXBot - A LLM guided intelligent chatbot suite for improved interaction and information and data retrieval from SQL databases 
 
 **PlantXBot** is a flexible, AI-driven conversational interface designed to query specialized databases using natural language. It combines **Large Language Models (LLMs)** with **SQL generation** and **Retrieval-Augmented Generation (RAG)** to provide accurate, data-backed answers.
 
