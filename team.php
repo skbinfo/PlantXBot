@@ -1,17 +1,21 @@
-<DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Team | Plant Regulatory Elements</title>
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="icon" href="images/favicon/logo.png" type="image/png">
+    <title>Team | Your Brand Name</title>
+    <!-- Replace href with your favicon path -->
+    <link rel="icon" href="images/favicon.png" type="image/png"> 
+    <!-- If you have an external CSS file, uncomment the line below -->
+    <!-- <link rel="stylesheet" href="css/style.css" /> -->
    <style>
         /* ===== GLOBAL & TYPOGRAPHY ===== */
         :root {
-            --brand-blue: #004c97;
-            --mid-blue:   #0063c6;
-            --light-blue: #1490ff;
+            /* Customize your brand colors here */
+            --brand-blue: #333333; /* Primary Color */
+            --mid-blue:   #555555; /* Secondary Color */
+            --light-blue: #777777; /* Accent Color */
+            
             --text-dark:  #333;
             --text-light: #fff;
             --gray:       #f7f8fa;
@@ -50,37 +54,6 @@
         p { margin-bottom: 1rem; max-width: 80ch; }
         a { color: var(--mid-blue); text-decoration: none; }
         a:hover { text-decoration: underline; }
-
-        /* ===== NAVBAR ===== */
-        .navbar {
-            background: var(--brand-blue);
-            padding: 1rem;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .navbar .container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .brand-logo-title { display: flex; align-items: center; }
-        .logo-circle {
-            width: 50px; height: 50px;
-            border-radius: 50%; object-fit: cover;
-            margin-right: 15px;
-        }
-        .brand {
-            font-size: 1.5rem; font-weight: bold;
-            color: var(--text-light); text-decoration: none;
-        }
-        nav a {
-            margin-left: 20px; text-decoration: none;
-            color: var(--text-light); font-size: 1rem; font-weight: 500;
-            transition: var(--transition);
-        }
-        nav a:hover { opacity: 0.8; }
 
         /* ===== SECTION STYLING ===== */
         section {
@@ -134,12 +107,12 @@
         }
 
         .card p {
-            font-size: 0.9rem; /* smaller font for description */
+            font-size: 0.9rem;
             color: #555;
             margin-top: 0.5rem;
         }
 
-        /* ===== FOOTER ===== */
+        /* ===== FOOTER STYLING (If not included via PHP) ===== */
         footer {
             background: var(--brand-blue);
             color: var(--text-light);
@@ -152,52 +125,58 @@
 <body>
 
 <!-- Include Header -->
+<!-- Ensure 'header.html' exists in your directory -->
 <?php include 'header.html'; ?>
 
 <section style="background: var(--text-light); padding-top: 3rem;">
     <div class="container section-intro">
         <h1>Meet Our Team</h1>  
-     <p class="lead">
-    Our multidisciplinary team combines expertise in plant genomics, computational biology, and AI-driven data science. Together, we develop innovative tools and databases to advance plant molecular research. We are committed to fostering collaboration and enabling the scientific community to unlock new insights in plant biology.
-</p>
+        <p class="lead">
+            Insert your team's mission statement here. For example: "Our multidisciplinary team combines expertise in [Field A], [Field B], and [Field C]. Together, we develop innovative tools to advance research and unlock new insights."
+        </p>
     </div> 
 
     <div class="container">
         <div class="grid grid-cols-4">
+            <!-- Team Member 1 -->
             <div class="card">
-                <img src="images/team/kanka.jpg" alt="tRF Bot">
-                <h3>Kanka Mukherjee</h3>
-                <p>Project Associate-I</p>
-                <p>National Institute of Plant Genome Research</p>
+                <!-- Using placeholder image service -->
+                <img src="https://via.placeholder.com/150" alt="Team Member Photo">
+                <h3>John Doe</h3>
+                <p>Lead Developer</p>
+                <p>Organization Name</p>
             </div>
+            
+            <!-- Team Member 2 -->
             <div class="card">
-                <img src="images/team/niyati.jpg" alt="Fusion Bot">
-                <h3>Niyati Bisht</h3>
-                <p>Project Associate-II</p>
-                <p>National Institute of Plant Genome Research</p>
-
+                <img src="https://via.placeholder.com/150" alt="Team Member Photo">
+                <h3>Jane Smith</h3>
+                <p>Project Manager</p>
+                <p>Organization Name</p>
             </div>
+            
+            <!-- Team Member 3 -->
             <div class="card">
-                <img src="images/team/vivek.png" alt="AMP Bot">
-                <h3>Dr. AT Vivek</h3>
-                <p>Project Scientist-I</p>
-                <p>National Institute of Plant Genome Research</p>
-
+                <img src="https://via.placeholder.com/150" alt="Team Member Photo">
+                <h3>Dr. Alex Johnson</h3>
+                <p>Senior Scientist</p>
+                <p>Organization Name</p>
             </div>
+            
+            <!-- Team Member 4 -->
             <div class="card">
-                <img src="images/team/fiza.jpg" alt="Cotton Bot">
-                <h3>Fiza Hamid</h3>
-                <p>Ph.D. Scholar</p>
-                <p>National Institute of Plant Genome Research</p>
+                <img src="https://via.placeholder.com/150" alt="Team Member Photo">
+                <h3>Sarah Lee</h3>
+                <p>Research Scholar</p>
+                <p>Organization Name</p>
             </div>
         </div>
     </div>       
 </section>
 
 <!-- Include Footer -->
+<!-- Ensure 'footer.html' exists in your directory -->
 <?php include 'footer.html';?>
 
 </body>
 </html>
-
-
